@@ -11,5 +11,12 @@ describe('Blockchain', () => {
     it('starts with genesis block', () => {
         expect(newBlockchain.chain[0]).toEqual(Block.genesis());
     });
+    it('adds new block successfully', () => {
+        const newData='newdata';
+        newBlockchain.addBlock({
+            data:newData,
+        });
+        expect(newBlockchain.chain[-1].data).toEqual(newData);
+    });
     
 });
