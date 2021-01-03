@@ -8,8 +8,16 @@ class Block{
         this.hash=hash;
     }
     static genesis(){
-        return new Block(GENESIS_DATA);
+        return new this(GENESIS_DATA);
     }
-}
+    static mineBlock({lastBlock,data}){
+        return new this({
+            lastHash:lastBlock.hash,
+            data:data,
+            timestamp:Date.now(),
+            //hash left
+        })
+    }
+};
 
 module.exports=Block;
