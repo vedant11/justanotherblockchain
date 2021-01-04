@@ -53,8 +53,8 @@ describe('Block', () => {
         it('creates sha-256 based on params', () => {
             expect(minedBlock.hash).toEqual(cryptoHash(
                 minedBlock.timestamp,
-                lastBlock.hash,
-                data,
+                minedBlock.lastHash,
+                minedBlock.data,
                 minedBlock.nonce,
                 minedBlock.difficulty
             ));
