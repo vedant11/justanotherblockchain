@@ -8,6 +8,10 @@ to install dep.
 
 > npm install
 
+to start api server
+
+> npm run dev
+
 
 ## Requirements
 
