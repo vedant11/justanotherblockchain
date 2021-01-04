@@ -6,17 +6,22 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "node ./api/index.js",
-    "dev":"nodemon ./api/index.js"
+    "dev": "npm start redis && nodemon ./api/index.js",
+    "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon ./api/index.js",
+    "redis": "redis-server --daemonize yes"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "hex-to-binary": "^1.0.1"
+    "hex-to-binary": "^1.0.1",
+    "redis": "^3.0.2",
+    "request": "^2.88.2"
   }
 }

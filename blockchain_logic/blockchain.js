@@ -18,8 +18,7 @@ class Blockchain{
     }
 
     replaceChain(newChain){
-        console.log('runs once');
-        if (this.chain.length>newChain.chain.length){
+        if (this.chain.length>=newChain.chain.length){
             console.error(`length isn't valid for replacement `);
             return;
         }
@@ -35,7 +34,7 @@ class Blockchain{
     static isValidBlockchain(blockchain){
         const blocks=blockchain.chain;
         // checking if genesis block is valid
-        // Using JSON stringify to avoid instance ref comparision
+        // Using JSON stingify to avoid instance ref comparision
         if (JSON.stringify(blocks[0])!==JSON.stringify(Block.genesis()))
             return false;
         let lastHash=blocks[0].hash;
