@@ -39,6 +39,7 @@ class Blockchain{
         if (JSON.stringify(blocks[0])!==JSON.stringify(Block.genesis()))
             return false;
         let lastHash=blocks[0].hash;
+        let lastDifficulty=blocks[0].difficulty;
         blocks.shift(); // deletes first elem
         for (let index = 0; index < blocks.length; index++) {
             const block = blocks[index];
@@ -47,6 +48,10 @@ class Blockchain{
             lastHash=block.hash;
             if (Block.hashIsValid(block)===false)
                 return false;
+            // to prevent large jumps in difficulty levels
+            if (Math.abs(block.difficulty-lastDifficulty)>1)
+                return false;
+            lastDifficulty=block.difficulty;
         }
         return true;
     }
