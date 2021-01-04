@@ -3,13 +3,18 @@ const Block=require('./block');
 
 describe('Blockchain', () => {
     let newBlockchain, secondBC, originalChain;
+    //quieting console for this file
+    let errorMock,logMock;
+    errorMock=jest.fn();
+    logMock=jest.fn();
+    global.console.log=logMock;
+    global.console.error=errorMock;
     beforeEach(() => {
         // To give every desc block a new instance of blockchain
         newBlockchain=new Blockchain();
         secondBC=new Blockchain();
         originalChain=newBlockchain.chain;
     });
-
     it('adds new blockchain instance', () => {
         expect(newBlockchain instanceof Blockchain).toBe(true);
     });
@@ -60,13 +65,6 @@ describe('Blockchain', () => {
         });
     });
     describe('replaceChain()', () => {
-        let errorMock, logMock;
-        errorMock=jest.fn();
-        logMock=jest.fn();
-        beforeEach(() => {
-            global.console.error=errorMock;
-            global.console.log=logMock;
-        });
         describe('when secondBC is not longer', () => {
             beforeEach(() => {
                 secondBC.chain[0]={new: 'different gen block'};
