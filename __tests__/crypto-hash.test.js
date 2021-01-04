@@ -1,4 +1,4 @@
-const cryptoHash=require('./crypto-hash');
+const cryptoHash=require('../blockchain_logic/crypto-hash');
 
 describe('cryptoHash()', () => {
     it('generates sha-256', () => {
