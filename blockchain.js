@@ -18,14 +18,17 @@ class Blockchain{
     }
 
     replaceChain(newChain){
+        console.log('runs once');
         if (this.chain.length>newChain.chain.length){
-            console.log(`length isn't valid for replacement `);
+            console.error(`length isn't valid for replacement `);
             return;
         }
-        if (Blockchain.isValidBlockchain(newChain)){
-            console.log(`new chain is invalid`);
-            this.chain=newChain;
+        if (!Blockchain.isValidBlockchain(newChain)){
+            console.error(`new chain is invalid`);
+            return;
         }
+        console.log('replacing chain');
+        this.chain=newChain;
         return;
     }
 
@@ -39,9 +42,8 @@ class Blockchain{
         blocks.shift(); // deletes first elem
         for (let index = 0; index < blocks.length; index++) {
             const block = blocks[index];
-            if (block.lastHash!==lastHash){
-                console.log('returning false');
-                return false;}
+            if (block.lastHash!==lastHash)
+                return false;
             lastHash=block.hash;
             if (Block.hashIsValid(block)===false)
                 return false;

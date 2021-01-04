@@ -1,5 +1,6 @@
 const Blockchain=require('./blockchain');
 const Block=require('./block');
+
 describe('Blockchain', () => {
     let newBlockchain, secondBC, originalChain;
     beforeEach(() => {
@@ -59,11 +60,24 @@ describe('Blockchain', () => {
         });
     });
     describe('replaceChain()', () => {
+        let errorMock, logMock;
+        errorMock=jest.fn();
+        logMock=jest.fn();
+        beforeEach(() => {
+            global.console.error=errorMock;
+            global.console.log=logMock;
+        });
         describe('when secondBC is not longer', () => {
-            it('should not be replaced', () => {
+            beforeEach(() => {
                 secondBC.chain[0]={new: 'different gen block'};
                 newBlockchain.replaceChain(secondBC)
+                
+            });
+            it('should not be replaced', () => {
                 expect(newBlockchain.chain).toEqual(originalChain);
+            });
+            it('should call error', () => {
+                expect(errorMock).toHaveBeenCalled();
             });
         });
         describe('when secondBC is longer', () => {
@@ -74,16 +88,28 @@ describe('Blockchain', () => {
                 secondBC.addBlock({data:'grow bigggg'});
             });
             describe('when secondBC is not valid', () => {
-                it('should not get replaced', () => {
+                beforeEach(() => {
                     secondBC.chain[2].lastHash='tampered-last-hash';
                     newBlockchain.replaceChain(secondBC);
+                    
+                });
+                it('should not get replaced', () => {
                     expect(newBlockchain.chain).toEqual(originalChain);
+                });
+                it('should log an error', () => {
+                    expect(errorMock).toHaveBeenCalled();                    
                 });
             });
             describe('when secondBC is valid', () => {
-                it('should get replaced', () => {
+                beforeEach(() => {
                     newBlockchain.replaceChain(secondBC);
+                    
+                });
+                it('should get replaced', () => {
                     expect(newBlockchain.chain).not.toEqual(originalChain);                    
+                });
+                it('should log replacement', () => {
+                    expect(logMock).toHaveBeenCalled();
                 });
             });
         });
