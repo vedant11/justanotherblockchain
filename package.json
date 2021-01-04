@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "node ./api/index.js",
-    "dev": "nodemon ./api/index.js"
+    "dev": "npm start redis && nodemon ./api/index.js",
+    "redis":"redis-server --daemonize yes"
   },
   "keywords": [],
   "author": "",

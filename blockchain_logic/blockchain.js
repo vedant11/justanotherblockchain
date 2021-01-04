@@ -18,8 +18,7 @@ class Blockchain{
     }
 
     replaceChain(newChain){
-        console.log('runs once');
-        if (this.chain.length>newChain.chain.length){
+        if (this.chain.length>=newChain.chain.length){
             console.error(`length isn't valid for replacement `);
             return;
         }
