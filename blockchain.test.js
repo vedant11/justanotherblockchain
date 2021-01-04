@@ -1,11 +1,12 @@
 const Blockchain=require('./blockchain');
 const Block=require('./block');
 describe('Blockchain', () => {
-    let newBlockchain;
-
+    let newBlockchain, secondBC, originalChain;
     beforeEach(() => {
         // To give every desc block a new instance of blockchain
         newBlockchain=new Blockchain();
+        secondBC=new Blockchain();
+        originalChain=newBlockchain.chain;
     });
 
     it('adds new blockchain instance', () => {
@@ -53,6 +54,36 @@ describe('Blockchain', () => {
             describe('chain has no invalid blocks', () => {
                 it('should return true', () => {
                     expect(Blockchain.isValidBlockchain(newBlockchain)).toBe(true);
+                });
+            });
+        });
+    });
+    describe('replaceChain()', () => {
+        describe('when secondBC is not longer', () => {
+            it('should not be replaced', () => {
+                secondBC.chain[0]={new: 'different gen block'};
+                newBlockchain.replaceChain(secondBC)
+                expect(newBlockchain.chain).toEqual(originalChain);
+            });
+        });
+        describe('when secondBC is longer', () => {
+            beforeEach(() => {
+                secondBC.addBlock({data:'grow big'});
+                secondBC.addBlock({data:'grow bigg'});
+                secondBC.addBlock({data:'grow biggg'});
+                secondBC.addBlock({data:'grow bigggg'});
+            });
+            describe('when secondBC is not valid', () => {
+                it('should not get replaced', () => {
+                    secondBC.chain[2].lastHash='tampered-last-hash';
+                    newBlockchain.replaceChain(secondBC);
+                    expect(newBlockchain.chain).toEqual(originalChain);
+                });
+            });
+            describe('when secondBC is valid', () => {
+                it('should get replaced', () => {
+                    newBlockchain.replaceChain(secondBC);
+                    expect(newBlockchain.chain).not.toEqual(originalChain);                    
                 });
             });
         });

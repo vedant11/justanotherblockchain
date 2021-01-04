@@ -16,6 +16,19 @@ class Blockchain{
         });
         this.chain.push(newBlock);
     }
+
+    replaceChain(newChain){
+        if (this.chain.length>newChain.chain.length){
+            console.log(`length isn't valid for replacement `);
+            return;
+        }
+        if (Blockchain.isValidBlockchain(newChain)){
+            console.log(`new chain is invalid`);
+            this.chain=newChain;
+        }
+        return;
+    }
+
     static isValidBlockchain(blockchain){
         const blocks=blockchain.chain;
         // checking if genesis block is valid
