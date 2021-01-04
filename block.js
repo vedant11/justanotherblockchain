@@ -14,12 +14,18 @@ class Block{
         return new this(GENESIS_DATA);
     }
     static mineBlock({lastBlock,data}){
-        const {hash,difficulty}=lastBlock;
+        let difficulty=lastBlock.difficulty;
+        const {hash}=lastBlock;
+        // const time_diff=Number(Date.now())-Number(lastBlock.timestamp);
         let newHash;
         let nonce=0;
         let timestamp;
         do{
             timestamp=Date.now();
+            difficulty=Block.adjustDifficulty({
+                originalBlock:lastBlock,
+                timestamp:timestamp
+            })
             // hash here is the lastHash
             newHash=cryptoHash(timestamp,hash,nonce,difficulty,data);
             nonce++;

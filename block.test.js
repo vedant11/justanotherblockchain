@@ -17,6 +17,7 @@ describe('Block', () => {
         nonce:nonce,
         difficulty:difficulty
     });
+ 
     it('find if fields present', () => {
         expect(newBlock.timestamp).toEqual(timestamp);
         expect(newBlock.data).toEqual(data);
@@ -65,13 +66,6 @@ describe('Block', () => {
         });
     });
     describe('adjustDifficulty()', () => {
-        beforeEach(() => {
-            let errMock,logMock;
-            errMock=jest.fn();
-            logMock=jest.fn();
-            global.console.error=errMock;
-            global.console.log=logMock;
-        });
         it('raises difficulty for quickly mined block', () => {
             expect(Block.adjustDifficulty({
                 originalBlock:newBlock,

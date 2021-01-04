@@ -1,6 +1,6 @@
 const MINE_RATE=1000;
 const GENESIS_DATA={
-    timestamp:1,
+    timestamp:Date.now(),
     lastHash:'____',
     hash:'hash1',
     data:'data',
