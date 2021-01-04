@@ -17,7 +17,11 @@ describe('Block', () => {
         nonce:nonce,
         difficulty:difficulty
     });
- 
+    // Quieting console for this file
+    let errorMock=jest.fn();
+    let logMock=jest.fn();
+    global.console.log=logMock;
+    global.console.error=errorMock;
     it('find if fields present', () => {
         expect(newBlock.timestamp).toEqual(timestamp);
         expect(newBlock.data).toEqual(data);

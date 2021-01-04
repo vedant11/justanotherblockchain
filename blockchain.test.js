@@ -3,14 +3,18 @@ const Block=require('./block');
 
 describe('Blockchain', () => {
     let newBlockchain, secondBC, originalChain;
-   
+    //quieting console for this file
+    let errorMock,logMock;
+    errorMock=jest.fn();
+    logMock=jest.fn();
+    global.console.log=logMock;
+    global.console.error=errorMock;
     beforeEach(() => {
         // To give every desc block a new instance of blockchain
         newBlockchain=new Blockchain();
         secondBC=new Blockchain();
         originalChain=newBlockchain.chain;
     });
-    
     it('adds new blockchain instance', () => {
         expect(newBlockchain instanceof Blockchain).toBe(true);
     });
