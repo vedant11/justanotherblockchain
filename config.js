@@ -1,4 +1,4 @@
-const MINE_RATE=1000;
+const MINE_RATE=10;
 const GENESIS_DATA={
     timestamp:Date.now(),
     lastHash:'____',
