@@ -1,4 +1,4 @@
-const MINE_RATE=10;
+const MINE_RATE=1000;
 const GENESIS_DATA={
     // timestamp should be hardcoded to maintain genesis check
     timestamp:191817,
