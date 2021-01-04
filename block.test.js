@@ -21,7 +21,6 @@ describe('Block', () => {
     });
     describe('genesisBlock()', () => {
         const genesisBlock=Block.genesis();
-        console.log('gensisBlock is', genesisBlock);
         it('returns a Block instance', () => {
             expect(genesisBlock instanceof Block).toBe(true);
         });

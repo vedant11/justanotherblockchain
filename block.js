@@ -21,6 +21,11 @@ class Block{
             hash:cryptoHash(timestamp,data,lastHash),
         })
     }
+    static hashIsValid(block){
+        return block.hash===cryptoHash(
+            block.timestamp,block.data,block.lastHash
+            );
+    }
 };
 
 module.exports=Block;
