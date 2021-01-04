@@ -8,7 +8,7 @@ describe('Block', () => {
     const hash='newhash';
     const lastHash='lasthash';
     const nonce=1;
-    const difficulty=1;
+    const difficulty=2;
     const newBlock=new Block({
         timestamp:timestamp,
         data:data,
@@ -81,7 +81,13 @@ describe('Block', () => {
                 originalBlock:newBlock,
                 timestamp: Number(newBlock.timestamp)+MINE_RATE+100
             })).toEqual(newBlock.difficulty-1)
-            
+        });
+        it('should not go less than 1', () => {
+            newBlock.difficulty=-1;
+            expect(Block.adjustDifficulty({
+                originalBlock:newBlock,
+                timestamp:0
+            })).toEqual(1);
         });
     });
 });
