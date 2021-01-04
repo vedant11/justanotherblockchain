@@ -9,10 +9,6 @@ const app = express();
 const blockchain=new Blockchain();
 const pubsub=new PubSub({blockchain});
 const ROOT_NODE_ADDRESS=`http://localhost:${PORT}`;
-setTimeout(() => {
-    // to do it async
-    pubsub.broadcastBlockchain()
-}, 1000);
 app.use(bodyParser.json());
 
 
@@ -33,7 +29,7 @@ const syncChains=()=>{
     request({url:`${ROOT_NODE_ADDRESS}/api/blocks`},(err,res,body)=>{
         if(!err && res.statusCode===200){
             const rootNodeChain=JSON.parse(body);
-            console.log('replacing change on sync',rootNodeChain);
+            console.log('replacing chain on sync',rootNodeChain);
             blockchain.replaceChain(rootNodeChain);
         }
     });
@@ -46,6 +42,7 @@ if (PEER_PORT===undefined)
     PEER_PORT=PORT;
 app.listen(PEER_PORT,()=>{
     console.log(`app started at ${PEER_PORT} `);
-    // syncing on start
-    syncChains();
+    // syncing on start only for non root nodes
+    if (PEER_PORT!==PORT)
+        syncChains();
 });

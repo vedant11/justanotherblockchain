@@ -36,7 +36,13 @@ class PubSub{
     }
 
     publish({channel,message}){
-        this.pub.publish(channel,message);
+        // to prevent listening to its own publishes
+        this.sub.unsubscribe(channel,()=>{
+            this.pub.publish(channel,message,()=>{
+                this.sub.subscribe(channel);
+            });
+
+        })
     }
 
     broadcastBlockchain(){
