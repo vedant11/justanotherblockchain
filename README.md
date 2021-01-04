@@ -1,4 +1,14 @@
 # justanotherblockchain
+
+to run tests
+
+> npm run test 
+
+to install dep.
+
+> npm install
+
+
 ## Requirements
 
 For development, you will only need Node.js and a node global package, Yarn, installed in your environement.

@@ -7,17 +7,23 @@ describe('Block', () => {
     const data='new-data';
     const hash='newhash';
     const lastHash='lasthash';
+    const nonce=1;
+    const difficulty=1;
     const newBlock=new Block({
         timestamp:timestamp,
         data:data,
         hash:hash,
         lastHash:lastHash,
+        nonce:nonce,
+        difficulty:difficulty
     });
     it('find if fields present', () => {
         expect(newBlock.timestamp).toEqual(timestamp);
         expect(newBlock.data).toEqual(data);
         expect(newBlock.lastHash).toEqual(lastHash);
         expect(newBlock.hash).toEqual(hash);
+        expect(newBlock.nonce).toEqual(nonce);
+        expect(newBlock.difficulty).toEqual(difficulty);
     });
     describe('genesisBlock()', () => {
         const genesisBlock=Block.genesis();
@@ -49,7 +55,13 @@ describe('Block', () => {
                 minedBlock.timestamp,
                 lastBlock.hash,
                 data,
+                minedBlock.nonce,
+                minedBlock.difficulty
             ));
+        });
+        it('sets a `hash` that matches the difficulty', () => {
+            expect(minedBlock.hash.substring(0,minedBlock.difficulty))
+            .toEqual('0'.repeat(minedBlock.difficulty))
         });
     });
 });
