@@ -20,10 +20,16 @@ app.get('/api/blocks',(req,res)=>{
 app.post('/api/mine',(req,res)=>{
     const {data}=req.body;
     blockchain.addBlock({data});
+    // to broadcast change in chain to every peer
+    pubsub.broadcastBlockchain();
     res.redirect('/api/blocks');
 });
 
-
-app.listen(PORT,()=>{
-    console.log(`app started at ${PORT} `);
+let PEER_PORT;
+if (process.env.GENERATE_PEER_PORT==='true')
+    PEER_PORT=PORT+Math.ceil(Math.random()*1000);
+if (PEER_PORT===undefined)
+    PEER_PORT=PORT;
+app.listen(PEER_PORT,()=>{
+    console.log(`app started at ${PEER_PORT} `);
 });
