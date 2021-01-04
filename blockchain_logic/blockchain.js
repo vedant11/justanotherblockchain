@@ -34,7 +34,7 @@ class Blockchain{
     static isValidBlockchain(blockchain){
         const blocks=blockchain.chain;
         // checking if genesis block is valid
-        // Using JSON stringify to avoid instance ref comparision
+        // Using JSON stingify to avoid instance ref comparision
         if (JSON.stringify(blocks[0])!==JSON.stringify(Block.genesis()))
             return false;
         let lastHash=blocks[0].hash;

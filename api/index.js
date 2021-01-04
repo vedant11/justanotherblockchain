@@ -8,6 +8,7 @@ const app = express();
 const blockchain=new Blockchain();
 const pubsub=new PubSub({blockchain});
 setTimeout(() => {
+    // to do it async
     pubsub.broadcastBlockchain()
 }, 1000);
 app.use(bodyParser.json());
@@ -22,6 +23,7 @@ app.post('/api/mine',(req,res)=>{
     blockchain.addBlock({data});
     // to broadcast change in chain to every peer
     pubsub.broadcastBlockchain();
+    console.log('broadcasted the chain');
     res.redirect('/api/blocks');
 });
 

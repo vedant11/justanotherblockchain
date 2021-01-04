@@ -1,6 +1,7 @@
 const MINE_RATE=10;
 const GENESIS_DATA={
-    timestamp:Date.now(),
+    // timestamp should be hardcoded to maintain genesis check
+    timestamp:191817,
     lastHash:'____',
     hash:'hash1',
     data:'data',
